@@ -10,7 +10,6 @@
 #' @importFrom xml2 xml_find_first
 #' @importFrom dplyr select
 #' @importFrom dplyr full_join
-#' @importFrom sf st_as_sf
 #' @importFrom stringr str_extract
 #' @importFrom purrr map
 #' @author Robert Myles McDonnell, \email{robertmylesmcdonnell@gmail.com}
@@ -63,12 +62,6 @@ tidyfeed <- function(feed, sf = TRUE){
   } else if(grepl("http://www.georss.org/georss", xml2::xml_attr(doc, "xmlns:georss"))){
 
     result <- geo_parse(doc)
-
-    if(sf == TRUE){
-      result <- sf::st_as_sf(x = result,
-                             coords = c("item_long", "item_lat"),
-                             crs = "+proj=longlat +datum=WGS84")
-      }
 
     return(result)
 
